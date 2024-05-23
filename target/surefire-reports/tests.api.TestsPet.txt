@@ -1,0 +1,12 @@
+-------------------------------------------------------------------------------
+Test set: tests.api.TestsPet
+-------------------------------------------------------------------------------
+Tests run: 5, Failures: 2, Errors: 0, Skipped: 0, Time elapsed: 30.113 s <<< FAILURE! - in tests.api.TestsPet
+deletePetTest  Time elapsed: 9.122 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <201> but was: <200>
+	at tests.api.TestsPet.deletePetTest(TestsPet.java:90)
+
+findPetsByStatusTest  Time elapsed: 8.185 s  <<< FAILURE!
+org.opentest4j.AssertionFailedError: expected: <201> but was: <200>
+	at tests.api.TestsPet.findPetsByStatusTest(TestsPet.java:104)
+

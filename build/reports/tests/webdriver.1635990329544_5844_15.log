@@ -1,0 +1,178 @@
+[1635990330.080][INFO]: Starting ChromeDriver 95.0.4638.54 (d31a821ec901f68d0d34ccdbaea45b4c86ce543e-refs/branch-heads/4638@{#871}) on port 14651
+[1635990330.080][INFO]: Please see https://chromedriver.chromium.org/security-considerations for suggestions on keeping ChromeDriver safe.
+[1635990330.785][INFO]: [2d011cdda69d6aa667c1e0660d6ecf91] COMMAND InitSession {
+   "capabilities": {
+      "firstMatch": [ {
+         "acceptInsecureCerts": true,
+         "browserName": "chrome",
+         "goog:chromeOptions": {
+            "args": [ "--proxy-bypass-list=\u003C-loopback>", "--disable-dev-shm-usage", "--no-sandbox" ],
+            "excludeSwitches": [ "enable-automation", "load-extension" ],
+            "extensions": [  ],
+            "prefs": {
+               "credentials_enable_service": false,
+               "download.default_directory": "C:\\Users\\Oleksii_Dorofieiev\\Desktop\\TA_Adv\\ta_mentoring_adv\\Test-runner-Junit5\\build\\downloads\\1635990328756_5844_15",
+               "plugins.always_open_pdf_externally": true,
+               "profile.default_content_setting_values.automatic_downloads": 1
+            }
+         },
+         "pageLoadStrategy": "normal"
+      } ]
+   },
+   "desiredCapabilities": {
+      "acceptInsecureCerts": true,
+      "acceptSslCerts": true,
+      "browserName": "chrome",
+      "goog:chromeOptions": {
+         "args": [ "--proxy-bypass-list=\u003C-loopback>", "--disable-dev-shm-usage", "--no-sandbox" ],
+         "excludeSwitches": [ "enable-automation", "load-extension" ],
+         "extensions": [  ],
+         "prefs": {
+            "credentials_enable_service": false,
+            "download.default_directory": "C:\\Users\\Oleksii_Dorofieiev\\Desktop\\TA_Adv\\ta_mentoring_adv\\Test-runner-Junit5\\build\\downloads\\1635990328756_5844_15",
+            "plugins.always_open_pdf_externally": true,
+            "profile.default_content_setting_values.automatic_downloads": 1
+         }
+      },
+      "handlesAlerts": true,
+      "javascriptEnabled": true,
+      "pageLoadStrategy": "normal",
+      "takesScreenshot": true
+   }
+}
+[1635990330.794][INFO]: Populating Preferences file: {
+   "alternate_error_pages": {
+      "enabled": false
+   },
+   "autofill": {
+      "enabled": false
+   },
+   "browser": {
+      "check_default_browser": false
+   },
+   "credentials_enable_service": false,
+   "distribution": {
+      "import_bookmarks": false,
+      "import_history": false,
+      "import_search_engine": false,
+      "make_chrome_default_for_user": false,
+      "skip_first_run_ui": true
+   },
+   "dns_prefetching": {
+      "enabled": false
+   },
+   "download": {
+      "default_directory": "C:\\Users\\Oleksii_Dorofieiev\\Desktop\\TA_Adv\\ta_mentoring_adv\\Test-runner-Junit5\\build\\downloads\\1635990328756_5844_15"
+   },
+   "plugins": {
+      "always_open_pdf_externally": true
+   },
+   "profile": {
+      "content_settings": {
+         "pattern_pairs": {
+            "https://*,*": {
+               "media-stream": {
+                  "audio": "Default",
+                  "video": "Default"
+               }
+            }
+         }
+      },
+      "default_content_setting_values": {
+         "automatic_downloads": 1,
+         "geolocation": 1
+      },
+      "default_content_settings": {
+         "geolocation": 1,
+         "mouselock": 1,
+         "notifications": 1,
+         "popups": 1,
+         "ppapi-broker": 1
+      },
+      "password_manager_enabled": false
+   },
+   "safebrowsing": {
+      "enabled": false
+   },
+   "search": {
+      "suggest_enabled": false
+   },
+   "translate": {
+      "enabled": false
+   }
+}
+[1635990330.796][INFO]: Populating Local State file: {
+   "background_mode": {
+      "enabled": false
+   },
+   "ssl": {
+      "rev_checking": {
+         "enabled": false
+      }
+   }
+}
+[1635990330.801][INFO]: Launching chrome: "C:\Program Files\Google\Chrome\Application\chrome.exe" --allow-pre-commit-input --disable-background-networking --disable-backgrounding-occluded-windows --disable-client-side-phishing-detection --disable-default-apps --disable-dev-shm-usage --disable-hang-monitor --disable-popup-blocking --disable-prompt-on-repost --disable-sync --enable-blink-features=ShadowDOMV0 --enable-logging --ignore-certificate-errors --log-level=0 --no-first-run --no-sandbox --no-service-autorun --password-store=basic --proxy-bypass-list=<-loopback> --remote-debugging-port=0 --test-type=webdriver --use-mock-keychain --user-data-dir="C:\WINDOWS\TEMP\scoped_dir6404_1879749667" data:,
+[1635990331.538][INFO]: resolved localhost to ["::1","127.0.0.1"]
+[1635990331.543][INFO]: resolved localhost to ["::1","127.0.0.1"]
+[1635990331.892][INFO]: [2d011cdda69d6aa667c1e0660d6ecf91] RESPONSE InitSession {
+   "capabilities": {
+      "acceptInsecureCerts": true,
+      "browserName": "chrome",
+      "browserVersion": "95.0.4638.69",
+      "chrome": {
+         "chromedriverVersion": "95.0.4638.54 (d31a821ec901f68d0d34ccdbaea45b4c86ce543e-refs/branch-heads/4638@{#871})",
+         "userDataDir": "C:\\WINDOWS\\TEMP\\scoped_dir6404_1879749667"
+      },
+      "goog:chromeOptions": {
+         "debuggerAddress": "localhost:63607"
+      },
+      "networkConnectionEnabled": false,
+      "pageLoadStrategy": "normal",
+      "platformName": "windows",
+      "proxy": {
+
+      },
+      "setWindowRect": true,
+      "strictFileInteractability": false,
+      "timeouts": {
+         "implicit": 0,
+         "pageLoad": 300000,
+         "script": 30000
+      },
+      "unhandledPromptBehavior": "dismiss and notify",
+      "webauthn:extension:credBlob": true,
+      "webauthn:extension:largeBlob": true,
+      "webauthn:virtualAuthenticators": true
+   },
+   "sessionId": "2d011cdda69d6aa667c1e0660d6ecf91"
+}
+[1635990331.990][INFO]: [2d011cdda69d6aa667c1e0660d6ecf91] COMMAND SetWindowRect {
+   "height": 768,
+   "width": 1366
+}
+[1635990331.990][INFO]: Waiting for pending navigations...
+[1635990331.992][INFO]: Done waiting for pending navigations. Status: ok
+[1635990332.111][INFO]: Waiting for pending navigations...
+[1635990332.112][INFO]: Done waiting for pending navigations. Status: ok
+[1635990332.112][INFO]: [2d011cdda69d6aa667c1e0660d6ecf91] RESPONSE SetWindowRect {
+   "height": 770,
+   "width": 1368,
+   "x": 8,
+   "y": 8
+}
+[1635990332.128][INFO]: [2d011cdda69d6aa667c1e0660d6ecf91] COMMAND SetTimeouts {
+   "pageLoad": 30000
+}
+[1635990332.128][INFO]: [2d011cdda69d6aa667c1e0660d6ecf91] RESPONSE SetTimeouts
+[1635990332.144][INFO]: [2d011cdda69d6aa667c1e0660d6ecf91] COMMAND Navigate {
+   "url": "https://trello.com"
+}
+[1635990332.144][INFO]: Waiting for pending navigations...
+[1635990332.144][INFO]: Done waiting for pending navigations. Status: ok
+[1635990332.818][INFO]: Waiting for pending navigations...
+[1635990334.120][INFO]: Done waiting for pending navigations. Status: ok
+[1635990334.120][INFO]: [2d011cdda69d6aa667c1e0660d6ecf91] RESPONSE Navigate
+[1635990334.187][INFO]: [2d011cdda69d6aa667c1e0660d6ecf91] COMMAND Quit {
+
+}
+[1635990334.644][INFO]: [2d011cdda69d6aa667c1e0660d6ecf91] RESPONSE Quit
