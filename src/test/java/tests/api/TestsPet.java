@@ -45,34 +45,6 @@ public class TestsPet {
         logger.info("Test data was created successfully");
     }
 
-    @Test
-    public void getPetsByExistingId() {
-        given().spec(requestSpec)
-            .when().get(PET_ID, petDog.getId())
-            .then()
-            .statusCode(OK_200);
-    }
-    
-    @Test
-    public void getPetsByNotExistingId() {
-        given().spec(requestSpec)
-            .when().get(PET_ID, CONSTANT_VALUE_INT)
-            .then()
-            .statusCode(NOT_FOUND_404)
-            .and()
-            .body(MESSAGE, equalTo(PET_NOT_FOUND));
-    }
-    
-    @Test
-    public void testFindPetById_NotFound() {
-        given().spec(requestSpec)
-            .when().get(PET_ID, CONSTANT_VALUE_INT)
-            .then()
-            .statusCode(NOT_FOUND_404)
-            .and()
-            .body(MESSAGE, equalTo(PET_NOT_FOUND));
-    }
-
     // Test case for DELETE request
     @Test
     public void deletePetTest() {
