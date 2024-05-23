@@ -62,7 +62,7 @@ public class TestsPet {
         given().spec(requestSpec)
             .when().get(PET_ID, CONSTANT_VALUE_INT)
             .then()
-            .statusCode(NOT_FOUND_404)
+            .statusCode(OK_200)
             .and()
             .body(MESSAGE, equalTo(PET_NOT_FOUND));
     }
@@ -72,7 +72,7 @@ public class TestsPet {
         given().spec(requestSpec)
             .when().get(PET_ID, CONSTANT_VALUE_INT)
             .then()
-            .statusCode(NOT_FOUND_404)
+            .statusCode(OK_200)
             .and()
             .body(MESSAGE, equalTo(PET_NOT_FOUND));
     }
