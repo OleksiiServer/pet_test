@@ -87,7 +87,7 @@ public class TestsPet {
                 .delete(PET_ID,petId);
 
         // Assert status code
-        assertEquals(201, response.getStatusCode());
+        assertEquals(200, response.getStatusCode());
     }
 
     // Test case for GET request
@@ -101,7 +101,7 @@ public class TestsPet {
                 .get("/findByStatus?status=" + status);
 
         // Assert status code
-        assertEquals(201, response.getStatusCode());
+        assertEquals(200, response.getStatusCode());
     }
 
     @AfterAll
