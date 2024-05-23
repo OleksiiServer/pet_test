@@ -1,23 +1,30 @@
 package tests.api;
 
-import epam.api.dto.Pet;
-import epam.api.utils.RestUtilities;
-import epam.data.TestData;
-import io.restassured.response.Response;
-import io.restassured.specification.RequestSpecification;
 import org.apache.log4j.Logger;
-import org.junit.jupiter.api.*;
+import static org.hamcrest.CoreMatchers.equalTo;
+import org.junit.jupiter.api.AfterAll;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.api.parallel.Execution;
 import org.junit.jupiter.api.parallel.ExecutionMode;
 
-
+import epam.api.dto.Pet;
+import epam.api.utils.RestUtilities;
 import static epam.data.StatusCode.NOT_FOUND_404;
 import static epam.data.StatusCode.OK_200;
-
-import static epam.data.StringConstants.*;
+import static epam.data.StringConstants.CONSTANT_VALUE_INT;
+import static epam.data.StringConstants.ID;
+import static epam.data.StringConstants.MESSAGE;
+import static epam.data.StringConstants.PET_ID;
+import static epam.data.StringConstants.PET_NOT_FOUND;
+import epam.data.TestData;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import io.restassured.response.Response;
+import io.restassured.specification.RequestSpecification;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @Execution(ExecutionMode.CONCURRENT)
@@ -71,6 +78,44 @@ public class TestsPet {
         // Assert status code
         assertEquals(200, response.getStatusCode());
     }
+
+    @Test
+   public void getPetsByExistingId() {
+       long existingPetId = 1; // replace with an existing pet ID
+   
+       given()
+           .spec(requestSpec)
+       .when()
+           .get(PET_ID, existingPetId)
+       .then()
+           .statusCode(OK_200)
+           .body(ID, equalTo(existingPetId));
+   }
+   
+   @Test
+   public void getPetsByNotExistingId() {
+       long nonExistingPetId = CONSTANT_VALUE_INT; // replace with a non-existing pet ID
+   
+       given()
+           .spec(requestSpec)
+       .when()
+           .get(PET_ID, nonExistingPetId)
+       .then()
+           .statusCode(NOT_FOUND_404);
+   } 
+   
+   @Test
+   public void testFindPetById_NotFound() {
+       long nonExistingPetId = CONSTANT_VALUE_INT; // replace with a non-existing pet ID
+   
+       given()
+           .spec(requestSpec)
+       .when()
+           .get(PET_ID, nonExistingPetId)
+       .then()
+           .statusCode(NOT_FOUND_404)
+           .body(MESSAGE, equalTo(PET_NOT_FOUND));
+   }
 
     @AfterAll
     public static void clean() {
