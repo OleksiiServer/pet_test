@@ -155,38 +155,28 @@
    
    @Test
    public void getPetsByExistingId() {
-       long existingPetId = 1; // replace with an existing pet ID
+       addNewPetToStoreForTest(petDog);
    
-       given()
-           .spec(requestSpec)
-       .when()
-           .get(PET_ID, existingPetId)
-       .then()
-           .statusCode(OK_200)
-           .body(ID, equalTo(existingPetId));
+       given().spec(requestSpec)
+               .when().get(PET_ID, petDog.getId())
+               .then()
+               .statusCode(OK_200)
+               .body(ID, equalTo(petDog.getId()));
    }
    
    @Test
    public void getPetsByNotExistingId() {
-       long nonExistingPetId = CONSTANT_VALUE_INT; // replace with a non-existing pet ID
-   
-       given()
-           .spec(requestSpec)
-       .when()
-           .get(PET_ID, nonExistingPetId)
-       .then()
-           .statusCode(NOT_FOUND_404);
-   } 
+       given().spec(requestSpec)
+               .when().get(PET_ID, CONSTANT_VALUE_INT)
+               .then()
+               .statusCode(NOT_FOUND_404);
+   }
    
    @Test
    public void testFindPetById_NotFound() {
-       long nonExistingPetId = CONSTANT_VALUE_INT; // replace with a non-existing pet ID
-   
-       given()
-           .spec(requestSpec)
-       .when()
-           .get(PET_ID, nonExistingPetId)
-       .then()
-           .statusCode(NOT_FOUND_404)
-           .body(MESSAGE, equalTo(PET_NOT_FOUND));
+       given().spec(requestSpec)
+               .when().get(PET_ID, CONSTANT_VALUE_INT)
+               .then()
+               .statusCode(NOT_FOUND_404)
+               .body(MESSAGE, equalTo(PET_NOT_FOUND));
    }
