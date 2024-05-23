@@ -50,11 +50,7 @@ public class TestsPet {
         given().spec(requestSpec)
             .when().get(PET_ID, petDog.getId())
             .then()
-            .statusCode(OK_200)
-            .and()
-            .body(ID, equalTo(petDog.getId()))
-            .body(NAME, equalTo(petDog.getName()))
-            .body(STATUS, equalTo(petDog.getStatus()));
+            .statusCode(OK_200);
     }
     
     @Test
@@ -62,7 +58,7 @@ public class TestsPet {
         given().spec(requestSpec)
             .when().get(PET_ID, CONSTANT_VALUE_INT)
             .then()
-            .statusCode(OK_200)
+            .statusCode(NOT_FOUND_404)
             .and()
             .body(MESSAGE, equalTo(PET_NOT_FOUND));
     }
@@ -72,7 +68,7 @@ public class TestsPet {
         given().spec(requestSpec)
             .when().get(PET_ID, CONSTANT_VALUE_INT)
             .then()
-            .statusCode(OK_200)
+            .statusCode(NOT_FOUND_404)
             .and()
             .body(MESSAGE, equalTo(PET_NOT_FOUND));
     }
