@@ -16,16 +16,13 @@
         <aspectj.version>1.9.2</aspectj.version>
         <junit.version>5.6.3</junit.version>
         <junit.runner.version>1.6.3</junit.runner.version>
-        <json-path-assert.version>2.2.0</json-path-assert.version>
         <agent-java-junit5.version>5.1.0-RC-1</agent-java-junit5.version>
         <logger-java-logback.version>5.0.3</logger-java-logback.version>
         <logback-classic.version>1.2.3</logback-classic.version>
         <hamcrest.version>2.2</hamcrest.version>
         <gson.version>2.8.6</gson.version>
         <log4j.version>1.2.17</log4j.version>
-        <sauce_bindings.version>1.0-beta-5</sauce_bindings.version>
-        <lombok.version>1.18.20</lombok.version>
-        <json-path.version>2.4.0</json-path.version>
+        <lombok.version>1.18.14</lombok.version>
         <rest-assured.version>4.4.0</rest-assured.version>
     </properties>
 
