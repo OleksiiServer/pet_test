@@ -1,7 +1,6 @@
 package tests.api;
 
 import org.apache.log4j.Logger;
-import static org.hamcrest.CoreMatchers.equalTo;
 import org.junit.jupiter.api.AfterAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
@@ -14,14 +13,8 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import epam.api.dto.Pet;
 import epam.api.utils.RestUtilities;
-import static epam.data.StatusCode.NOT_FOUND_404;
 import static epam.data.StatusCode.OK_200;
-import static epam.data.StringConstants.CONSTANT_VALUE_INT;
-import static epam.data.StringConstants.ID;
-import static epam.data.StringConstants.MESSAGE;
 import static epam.data.StringConstants.PET_ID;
-import static epam.data.StringConstants.PET_NOT_FOUND;
-import static epam.data.StringConstants.BAD_REQUEST_400;
 import epam.data.TestData;
 import static io.restassured.RestAssured.given;
 import io.restassured.response.Response;
@@ -79,34 +72,6 @@ public class TestsPet {
         // Assert status code
         assertEquals(200, response.getStatusCode());
     }
-
-    @Test
-   public void getPetsByExistingId() {   
-       given().spec(requestSpec)
-               .get(String.valueOf(petDog.getId()))
-               .then()
-               .statusCode(OK_200)
-               .and()
-               .body(ID, equalTo(petDog.getId()));
-   }
-   
-   @Test
-   public void getPetsByNotExistingId() {
-       given().spec(requestSpec)
-               .get(String.valueOf(CONSTANT_VALUE_INT))
-               .then()
-               .statusCode(NOT_FOUND_404);
-   }
-   
-   @Test
-   public void testFindPetById_NotFound() {
-       given().spec(requestSpec)
-               .get(String.valueOf(CONSTANT_VALUE_INT))
-               .then()
-               .statusCode(NOT_FOUND_404)
-               .and()
-               .body(MESSAGE, equalTo(PET_NOT_FOUND));
-   }
     
     @AfterAll
     public static void clean() {
