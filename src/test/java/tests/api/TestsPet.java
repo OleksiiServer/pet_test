@@ -99,7 +99,6 @@ public void getPetsByNotExistingId() {
 @Test
 public void testFindPetById_NotFound() {
 String TEXT_ABC="TEXT_ABC";
-
     given().spec(requestSpec)
             .when().get(PET_ID, TEXT_ABC)
             .then()
