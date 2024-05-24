@@ -77,38 +77,34 @@ public class TestsPet {
     }
 
     @Test
-    public void getPetsByExistingId() {
-        given()
-                .spec(requestSpec)
-                .when()
-                .get(PET_ID, petDog.getId())
-                .then()
-                .statusCode(NOT_FOUND_404)
-                .body(ID, equalTo(petDog.getId()))
-                .body(NAME, equalTo(petDog.getName()))
-                .body(STATUS, equalTo(petDog.getStatus()));
-    }
+public void getPetsByExistingId() {
 
-    @Test
-    public void getPetsByNotExistingId() {
-        given()
-                .spec(requestSpec)
-                .when()
-                .get(PET_ID, CONSTANT_VALUE_INT)
-                .then()
-                .statusCode(NOT_FOUND_404);
-    }
+    given().spec(requestSpec)
+            .when().get(PET_ID, petDog.getId())
+            .then()
+            .statusCode(OK_200)
+            .body(ID, equalTo(petDog.getId()))
+            .body(NAME, equalTo(petDog.getName()))
+            .body(STATUS, equalTo(petDog.getStatus()));
+}
 
-    @Test
-    public void testFindPetById_NotFound() {
-        given()
-                .spec(requestSpec)
-                .when()
-                .get(PET_ID, CONSTANT_VALUE_INT)
-                .then()
-                .statusCode(OK_200)
-                .body(MESSAGE, equalTo(PET_NOT_FOUND));
-    }
+@Test
+public void getPetsByNotExistingId() {
+    given().spec(requestSpec)
+            .when().get(PET_ID, CONSTANT_VALUE_INT)
+            .then()
+            .statusCode(NOT_FOUND_404);
+}
+
+@Test
+public void testFindPetById_NotFound() {
+String TEXT_ABC="TEXT_ABC";
+    given().spec(requestSpec)
+            .when().get(PET_ID, TEXT_ABC)
+            .then()
+            .statusCode(NOT_FOUND_404)
+            .body(MESSAGE, equalTo(PET_NOT_FOUND));
+}
 
     @AfterAll
     public static void clean() {

@@ -154,39 +154,37 @@
     // 						}
    
    
-   @Test
-   public void getPetsByExistingId() {
-       given()
-           .spec(requestSpec)
-           .pathParam(PET_ID, petDog.getId())
-       .when()
-           .get(PET_ID)
-       .then()
-           .statusCode(OK_200)
-           .body(ID, equalTo(petDog.getId()))
-           .body(NAME, equalTo(petDog.getName()))
-           .body(STATUS, equalTo(petDog.getStatus()));
-   }
-   
-   @Test
-   public void getPetsByNotExistingId() {
-       given()
-           .spec(requestSpec)
-           .pathParam(PET_ID, CONSTANT_VALUE_INT)
-       .when()
-           .get(PET_ID)
-       .then()
-           .statusCode(NOT_FOUND_404);
-   }
-   
-   @Test
-   public void testFindPetById_NotFound() {
-       given()
-           .spec(requestSpec)
-           .pathParam(PET_ID, CONSTANT_VALUE_INT)
-       .when()
-           .get(PET_ID)
-       .then()
-           .statusCode(NOT_FOUND_404)
-           .body(MESSAGE, equalTo(PET_NOT_FOUND));
-   }
+
+@Test
+public void getPetsByExistingId() {
+
+    given().spec(requestSpec)
+            .pathParam(PET_ID, petDog.getId())
+            .when().get(PET_ID)
+            .then()
+            .statusCode(OK_200)
+            .body(ID, equalTo(petDog.getId()))
+            .body(NAME, equalTo(petDog.getName()))
+            .body(STATUS, equalTo(petDog.getStatus()));
+}
+
+@Test
+public void getPetsByNotExistingId() {
+
+    given().spec(requestSpec)
+            .pathParam(PET_ID, CONSTANT_VALUE_INT)
+            .when().get(PET_ID)
+            .then()
+            .statusCode(NOT_FOUND_404);
+}
+
+@Test
+public void testFindPetById_NotFound() {
+
+    given().spec(requestSpec)
+            .pathParam(PET_ID, TEXT_ABC)
+            .when().get(PET_ID)
+            .then()
+            .statusCode(NOT_FOUND_404)
+            .body(MESSAGE, equalTo(PET_NOT_FOUND));
+}
