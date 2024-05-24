@@ -17,7 +17,7 @@ import epam.api.dto.Pet;
 import epam.api.utils.RestUtilities;
 import static epam.data.StatusCode.*;
 import static epam.data.StringConstants.*;
-import static epam.data.StringConstants.PET_ID;
+
 import epam.data.TestData;
 import static io.restassured.RestAssured.given;
 import io.restassured.response.Response;
@@ -49,18 +49,18 @@ public class TestsPet {
         logger.info("Test data was created successfully");
     }
 
-      // Test case for DELETE request
+    // Test case for DELETE request
     @Test
-      public void deletePetTest() {
-          long petId = 1; // Define petId here
-  
-          Response response = given().spec(requestSpec)
-                  .when()
-                  .delete(PET_ID,petId);
-  
-          // Assert status code
-          assertEquals(200, response.getStatusCode());
-      }
+    public void deletePetTest() {
+        long petId = 1; // Define petId here
+
+        Response response = given().spec(requestSpec)
+                .when()
+                .delete(PET_ID, petId);
+
+        // Assert status code
+        assertEquals(200, response.getStatusCode());
+    }
 
     // Test case for GET request
     @Test
@@ -76,40 +76,40 @@ public class TestsPet {
         assertEquals(200, response.getStatusCode());
     }
 
-     @Test
+    @Test
     public void getPetsByExistingId() {
-       int existingId = petDog.getId();
-   
-       given().spec(requestSpec)
-              .when().get(PET_ID, existingId)
-              .then()
-              .statusCode("201")
-              .and()
-              .body(ID, equalTo(existingId));
-   }
-   
-   @Test
-   public void getPetsByNotExistingId() {
-       long notExistingId = CONSTANT_VALUE_INT;
-   
-       given().spec(requestSpec)
-              .when().get(PET_ID, notExistingId)
-              .then()
-              .statusCode(NOT_FOUND_404);
-   }
-   
-   @Test
-   public void testFindPetById_NotFound() {
-       long notExistingId = CONSTANT_VALUE_INT;
-   
-       given().spec(requestSpec)
-              .when().get(PET_ID, notExistingId)
-              .then()
-              .statusCode(NOT_FOUND_404)
-              .and()
-              .body(MESSAGE, equalTo(PET_NOT_FOUND));
-   }
-    
+        given()
+                .spec(requestSpec)
+                .when()
+                .get(PET_ID, petDog.getId())
+                .then()
+                .statusCode(OK_200)
+                .body(ID, equalTo(petDog.getId()))
+                .body(NAME, equalTo(petDog.getName()))
+                .body(STATUS, equalTo(petDog.getStatus()));
+    }
+
+    @Test
+    public void getPetsByNotExistingId() {
+        given()
+                .spec(requestSpec)
+                .when()
+                .get(PET_ID, CONSTANT_VALUE_INT)
+                .then()
+                .statusCode(NOT_FOUND_404);
+    }
+
+    @Test
+    public void testFindPetById_NotFound() {
+        given()
+                .spec(requestSpec)
+                .when()
+                .get(PET_ID, CONSTANT_VALUE_INT)
+                .then()
+                .statusCode(NOT_FOUND_404)
+                .body(MESSAGE, equalTo(PET_NOT_FOUND));
+    }
+
     @AfterAll
     public static void clean() {
         logger.info("The tests were completed");
