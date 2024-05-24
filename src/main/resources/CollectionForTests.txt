@@ -109,8 +109,8 @@
     // 											]
     // 										}
     // 									},
-    // 									"status": "Bad Request",
-    // 									"code": 400,
+    // 									"status": "Not Found",
+    // 									"code": 404,
     // 									"_postman_previewlanguage": "text",
     // 									"header": [],
     // 									"cookie": [],
@@ -153,21 +153,24 @@
     // 							]
     // 						}
    
+   
+   
    @Test
    public void getPetsByExistingId() {
        addNewPetToStoreForTest(petDog);
    
        given().spec(requestSpec)
-               .when().get(PET_ID, petDog.getId())
+               .get(String.valueOf(petDog.getId()))
                .then()
                .statusCode(OK_200)
+               .and()
                .body(ID, equalTo(petDog.getId()));
    }
    
    @Test
    public void getPetsByNotExistingId() {
        given().spec(requestSpec)
-               .when().get(PET_ID, CONSTANT_VALUE_INT)
+               .get(String.valueOf(CONSTANT_VALUE_INT))
                .then()
                .statusCode(NOT_FOUND_404);
    }
@@ -175,8 +178,9 @@
    @Test
    public void testFindPetById_NotFound() {
        given().spec(requestSpec)
-               .when().get(PET_ID, CONSTANT_VALUE_INT)
+               .get(String.valueOf(CONSTANT_VALUE_INT))
                .then()
                .statusCode(NOT_FOUND_404)
+               .and()
                .body(MESSAGE, equalTo(PET_NOT_FOUND));
    }
