@@ -155,32 +155,37 @@
    
    
    
+   
    @Test
    public void getPetsByExistingId() {
-       addNewPetToStoreForTest(petDog);
+       long existingId = petDog.getId();
    
        given().spec(requestSpec)
-               .get(String.valueOf(petDog.getId()))
-               .then()
-               .statusCode(OK_200)
-               .and()
-               .body(ID, equalTo(petDog.getId()));
+              .when().get(BASE_PATH + existingId)
+              .then()
+              .statusCode(OK_200)
+              .and()
+              .body(ID, equalTo(existingId));
    }
    
    @Test
    public void getPetsByNotExistingId() {
+       long notExistingId = CONSTANT_VALUE_INT;
+   
        given().spec(requestSpec)
-               .get(String.valueOf(CONSTANT_VALUE_INT))
-               .then()
-               .statusCode(NOT_FOUND_404);
+              .when().get(BASE_PATH + notExistingId)
+              .then()
+              .statusCode(NOT_FOUND_404);
    }
    
    @Test
    public void testFindPetById_NotFound() {
+       long notExistingId = CONSTANT_VALUE_INT;
+   
        given().spec(requestSpec)
-               .get(String.valueOf(CONSTANT_VALUE_INT))
-               .then()
-               .statusCode(NOT_FOUND_404)
-               .and()
-               .body(MESSAGE, equalTo(PET_NOT_FOUND));
+              .when().get(BASE_PATH + notExistingId)
+              .then()
+              .statusCode(NOT_FOUND_404)
+              .and()
+              .body(MESSAGE, equalTo(PET_NOT_FOUND));
    }
