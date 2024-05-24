@@ -83,7 +83,7 @@ public class TestsPet {
                 .when()
                 .get(PET_ID, petDog.getId())
                 .then()
-                .statusCode(OK_200)
+                .statusCode(NOT_FOUND_404)
                 .body(ID, equalTo(petDog.getId()))
                 .body(NAME, equalTo(petDog.getName()))
                 .body(STATUS, equalTo(petDog.getStatus()));
@@ -106,7 +106,7 @@ public class TestsPet {
                 .when()
                 .get(PET_ID, CONSTANT_VALUE_INT)
                 .then()
-                .statusCode(NOT_FOUND_404)
+                .statusCode(OK_200)
                 .body(MESSAGE, equalTo(PET_NOT_FOUND));
     }
 
