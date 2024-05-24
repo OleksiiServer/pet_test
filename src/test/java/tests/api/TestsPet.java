@@ -83,7 +83,7 @@ public class TestsPet {
        given().spec(requestSpec)
               .when().get(PET_ID, existingId)
               .then()
-              .statusCode(OK_200)
+              .statusCode("201")
               .and()
               .body(ID, equalTo(existingId));
    }
