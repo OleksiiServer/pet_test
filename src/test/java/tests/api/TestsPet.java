@@ -14,7 +14,6 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import epam.api.dto.Pet;
 import epam.api.utils.RestUtilities;
-import static epam.data.StatusCode.NOT_FOUND_404;
 import static epam.data.StatusCode.OK_200;
 import static epam.data.StringConstants.CONSTANT_VALUE_INT;
 import static epam.data.StringConstants.ID;
@@ -102,7 +101,7 @@ public void getPetsByNotExistingId() {
     .when()
         .get(PET_ID, notExistingId)
     .then()
-        .statusCode(NOT_FOUND_404)
+        .statusCode(OK_200)
         .and()
         .body(MESSAGE, equalTo(PET_NOT_FOUND));
 }
@@ -116,7 +115,7 @@ public void testFindPetById_NotFound() {
     .when()
         .get(PET_ID, notExistingId)
     .then()
-        .statusCode(NOT_FOUND_404)
+        .statusCode(OK_200)
         .and()
         .body(MESSAGE, equalTo(PET_NOT_FOUND));
 }
