@@ -81,32 +81,44 @@ public class TestsPet {
 
     @Test
 public void getPetsByExistingId() {
+    int existingId = 1; // Assuming 1 is an existing ID
 
-    given().spec(requestSpec)
-            .get(String.valueOf(petDog.getId()))
-            .then()
-            .statusCode(OK_200)
-            .and()
-            .body(ID, equalTo(petDog.getId()));
+    given()
+        .spec(requestSpec)
+    .when()
+        .get(PET_ID, existingId)
+    .then()
+        .statusCode(OK_200)
+        .and()
+        .body(ID, equalTo(existingId));
 }
 
 @Test
 public void getPetsByNotExistingId() {
+    int notExistingId = CONSTANT_VALUE_INT; // Assuming CONSTANT_VALUE_INT is a non-existing ID
 
-    given().spec(requestSpec)
-            .get(String.valueOf(CONSTANT_VALUE_INT))
-            .then()
-            .statusCode(NOT_FOUND_404);
+    given()
+        .spec(requestSpec)
+    .when()
+        .get(PET_ID, notExistingId)
+    .then()
+        .statusCode(NOT_FOUND_404)
+        .and()
+        .body(MESSAGE, equalTo(PET_NOT_FOUND));
 }
 
 @Test
 public void testFindPetById_NotFound() {
+    int notExistingId = CONSTANT_VALUE_INT; // Assuming CONSTANT_VALUE_INT is a non-existing ID
 
-    given().spec(requestSpec)
-            .get(PET_ID, CONSTANT_VALUE_INT)
-            .then()
-            .statusCode(NOT_FOUND_404)
-            .body(MESSAGE, equalTo(PET_NOT_FOUND));
+    given()
+        .spec(requestSpec)
+    .when()
+        .get(PET_ID, notExistingId)
+    .then()
+        .statusCode(NOT_FOUND_404)
+        .and()
+        .body(MESSAGE, equalTo(PET_NOT_FOUND));
 }
 
     @AfterAll
