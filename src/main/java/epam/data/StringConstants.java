@@ -11,4 +11,5 @@ public final class StringConstants {
     public static final String PET_ID = "{petId}";
     public static final String STATUS = "status";
     public static final String MESSAGE = "message";
+    private final String TEXT_ABC = "ABC";
 }

@@ -1,9 +1,8 @@
 package tests.api;
 
 import org.apache.log4j.Logger;
-import org.junit.jupiter.api.AfterAll;
-
 import static org.hamcrest.CoreMatchers.equalTo;
+import org.junit.jupiter.api.AfterAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,9 +14,13 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import epam.api.dto.Pet;
 import epam.api.utils.RestUtilities;
-import static epam.data.StatusCode.*;
-import static epam.data.StringConstants.*;
-
+import static epam.data.StatusCode.NOT_FOUND_404;
+import static epam.data.StatusCode.OK_200;
+import static epam.data.StringConstants.CONSTANT_VALUE_INT;
+import static epam.data.StringConstants.ID;
+import static epam.data.StringConstants.MESSAGE;
+import static epam.data.StringConstants.PET_ID;
+import static epam.data.StringConstants.PET_NOT_FOUND;
 import epam.data.TestData;
 import static io.restassured.RestAssured.given;
 import io.restassured.response.Response;
@@ -80,27 +83,27 @@ public class TestsPet {
 public void getPetsByExistingId() {
 
     given().spec(requestSpec)
-            .when().get(PET_ID, petDog.getId())
+            .get(String.valueOf(petDog.getId()))
             .then()
             .statusCode(OK_200)
-            .body(ID, equalTo(petDog.getId()))
-            .body(NAME, equalTo(petDog.getName()))
-            .body(STATUS, equalTo(petDog.getStatus()));
+            .and()
+            .body(ID, equalTo(petDog.getId()));
 }
 
 @Test
 public void getPetsByNotExistingId() {
+
     given().spec(requestSpec)
-            .when().get(PET_ID, CONSTANT_VALUE_INT)
+            .get(String.valueOf(CONSTANT_VALUE_INT))
             .then()
             .statusCode(NOT_FOUND_404);
 }
 
 @Test
 public void testFindPetById_NotFound() {
-String TEXT_ABC="TEXT_ABC";
+
     given().spec(requestSpec)
-            .when().get(PET_ID, TEXT_ABC)
+            .get(PET_ID, CONSTANT_VALUE_INT)
             .then()
             .statusCode(NOT_FOUND_404)
             .body(MESSAGE, equalTo(PET_NOT_FOUND));

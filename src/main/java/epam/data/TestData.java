@@ -4,6 +4,6 @@ import epam.api.dto.Pet;
 
 public class TestData {
     public static Pet getTestPet() {
-        return new Pet(1, null, "Dog", null, null, "available");
+        return new Pet(1, null, "doggie", null, null, "available");
     }
 }
