@@ -38,7 +38,7 @@ public class TestsPet {
     public static void initSpec() {
         requestSpec = RestUtilities.getRequestSpecification();
         logger.info("Init was completely successfully");
-        petDog = TestData.getTestPet();
+        petDog = TestData.getTestPet() ;
     }
 
     @BeforeEach
