@@ -156,56 +156,42 @@
 
 
 ```java
-import com.epam.oleksii_dorofieiev.tests.Pet.Pet;
 import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
 
-import static com.epam.oleksii_dorofieiev.tests.StatusCode.*;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.CoreMatchers.equalTo;
 
 public class TestsPet {
     private static RequestSpecification requestSpec;
 
-    private Pet petDog = new Pet(1, null, "Dog", null, null, "available");
-
     private static final String BASE_URL = "https://petstore.swagger.io";
     private static final String BASE_PATH = "/v2/pet/";
-    private final String PET_NOT_FOUND = "Pet not found";
-    private final int CONSTANT_VALUE_INT = 50000;
-    private String ID = "id";
-    private String PET_ID = "{petId}";
-    private String NAME = "name";
-    private String STATUS = "status";
-    private String MESSAGE = "message";
-    int notExistingId = CONSTANT_VALUE_INT; // Assuming CONSTANT_VALUE_INT is a non-existing ID
+    private static final String PET_ID = "{petId}";
 
-    @BeforeClass
+    private final int existingPetId = 1;
+    private final int notExistingId = 50000;
+
+    @BeforeAll
     public static void initSpec() {
         requestSpec = new RequestSpecBuilder()
                 .setBaseUri(BASE_URL)
                 .setBasePath(BASE_PATH)
                 .setContentType(ContentType.JSON)
-                .addFilter(new ResponseLoggingFilter())
-                .addFilter(new RequestLoggingFilter())
                 .build();
     }
 
     @Test
     public void getPetsByExistingId() {
-        int existingPetId = 1; // Assuming 1 is an existing pet ID for demonstration
-
         given().spec(requestSpec)
                 .get(PET_ID, existingPetId)
                 .then()
-                .statusCode(OK_200)
+                .statusCode(200)
                 .and()
-                .body(ID, equalTo(existingPetId));
+                .body("id", equalTo(existingPetId));
     }
 
     @Test
@@ -213,9 +199,9 @@ public class TestsPet {
         given().spec(requestSpec)
                 .get(PET_ID, notExistingId)
                 .then()
-                .statusCode(NOT_FOUND_404)
+                .statusCode(404)
                 .and()
-                .body(MESSAGE, equalTo(PET_NOT_FOUND));
+                .body("message", equalTo("Pet not found"));
     }
 
     @Test
@@ -223,9 +209,18 @@ public class TestsPet {
         given().spec(requestSpec)
                 .get(PET_ID, notExistingId)
                 .then()
-                .statusCode(NOT_FOUND_404)
+                .statusCode(404)
                 .and()
-                .body(MESSAGE, equalTo(PET_NOT_FOUND));
+                .body("message", equalTo("Pet not found"));
     }
 }
 ```
+
+Explanation:
+1. **Request Specification**: Defined at the class level, specifying the base URI, path, and content type common to all requests.
+2. **Tests**:
+   - `getPetsByExistingId`: Tests retrieving a pet with an existing ID. Expects a 200 status code and the correct pet ID in the response body.
+   - `getPetsByNotExistingId`: Tests the scenario where a pet ID does not exist. Expects a 404 status code and an error message indicating the pet was not found.
+   - `testFindPetById_NotFound`: Similar to the `getPetsByNotExistingId` test, it checks the handling of a non-existent pet ID. Also expects a 404 status code and the "Pet not found" message.
+   
+Each test method uses the `given().spec(requestSpec)` pattern to use the pre-configured request specification, and queries are using `.get(PET_ID, petId)` to comply with the requirement to avoid using `.pathParam()`.
