@@ -155,47 +155,77 @@
    
 
 
-@Test
-public void getPetsByExistingId() {
-    int existingId = 1; // Assuming 1 is an existing ID
+```java
+import com.epam.oleksii_dorofieiev.tests.Pet.Pet;
+import io.restassured.builder.RequestSpecBuilder;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
+import io.restassured.http.ContentType;
+import io.restassured.specification.RequestSpecification;
+import org.junit.BeforeClass;
+import org.junit.Test;
 
-    given()
-        .spec(requestSpec)
-        .pathParam(PET_ID, existingId)
-    .when()
-        .get(PET_ID)
-    .then()
-        .statusCode(OK_200)
-        .and()
-        .body(ID, equalTo(existingId));
-}
+import static com.epam.oleksii_dorofieiev.tests.StatusCode.*;
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.equalTo;
 
-@Test
-public void getPetsByNotExistingId() {
+public class TestsPet {
+    private static RequestSpecification requestSpec;
+
+    private Pet petDog = new Pet(1, null, "Dog", null, null, "available");
+
+    private static final String BASE_URL = "https://petstore.swagger.io";
+    private static final String BASE_PATH = "/v2/pet/";
+    private final String PET_NOT_FOUND = "Pet not found";
+    private final int CONSTANT_VALUE_INT = 50000;
+    private String ID = "id";
+    private String PET_ID = "{petId}";
+    private String NAME = "name";
+    private String STATUS = "status";
+    private String MESSAGE = "message";
     int notExistingId = CONSTANT_VALUE_INT; // Assuming CONSTANT_VALUE_INT is a non-existing ID
 
-    given()
-        .spec(requestSpec)
-        .pathParam(PET_ID, notExistingId)
-    .when()
-        .get(PET_ID)
-    .then()
-        .statusCode(NOT_FOUND_404)
-        .and()
-        .body(MESSAGE, equalTo(PET_NOT_FOUND));
-}
+    @BeforeClass
+    public static void initSpec() {
+        requestSpec = new RequestSpecBuilder()
+                .setBaseUri(BASE_URL)
+                .setBasePath(BASE_PATH)
+                .setContentType(ContentType.JSON)
+                .addFilter(new ResponseLoggingFilter())
+                .addFilter(new RequestLoggingFilter())
+                .build();
+    }
 
-@Test
-public void testFindPetById_NotFound() {
-    int notExistingId = CONSTANT_VALUE_INT; // Assuming CONSTANT_VALUE_INT is a non-existing ID
+    @Test
+    public void getPetsByExistingId() {
+        int existingPetId = 1; // Assuming 1 is an existing pet ID for demonstration
 
-    given()
-        .spec(requestSpec)
-        .pathParam(PET_ID, notExistingId)
-    .when()
-        .get(PET_ID)
-    .then()
-        .statusCode(NOT_FOUND_404)
-        .and()
-        .body(MESSAGE, equalTo(PET_NOT_FOUND));
+        given().spec(requestSpec)
+                .get(PET_ID, existingPetId)
+                .then()
+                .statusCode(OK_200)
+                .and()
+                .body(ID, equalTo(existingPetId));
+    }
+
+    @Test
+    public void getPetsByNotExistingId() {
+        given().spec(requestSpec)
+                .get(PET_ID, notExistingId)
+                .then()
+                .statusCode(NOT_FOUND_404)
+                .and()
+                .body(MESSAGE, equalTo(PET_NOT_FOUND));
+    }
+
+    @Test
+    public void testFindPetById_NotFound() {
+        given().spec(requestSpec)
+                .get(PET_ID, notExistingId)
+                .then()
+                .statusCode(NOT_FOUND_404)
+                .and()
+                .body(MESSAGE, equalTo(PET_NOT_FOUND));
+    }
 }
+```
