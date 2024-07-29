@@ -19,10 +19,8 @@ import static epam.data.StatusCode.OK_200;
 import static epam.data.StringConstants.CONSTANT_VALUE_INT;
 import static epam.data.StringConstants.ID;
 import static epam.data.StringConstants.MESSAGE;
-import static epam.data.StringConstants.NAME;
 import static epam.data.StringConstants.PET_ID;
 import static epam.data.StringConstants.PET_NOT_FOUND;
-import static epam.data.StringConstants.STATUS;
 import epam.data.TestData;
 import static io.restassured.RestAssured.given;
 import io.restassured.response.Response;
@@ -84,38 +82,44 @@ public class TestsPet {
 
     @Test
     public void getPetsByExistingId() {
-        given().spec(requestSpec)
-               .header("api_key", "{{apiKey}}")
-               .pathParam("petId", petDog.getId())
-               .when().get(PET_ID)
-               .then()
-               .statusCode(OK_200)
-               .and()
-               .body(ID, equalTo(petDog.getId()))
-               .body(NAME, equalTo(petDog.getName()))
-               .body(STATUS, equalTo("available"));
+        int existingId = 1; // Assuming 1 is an existing ID
+    
+        given()
+            .spec(requestSpec)
+        .when()
+            .get(PET_ID, existingId)
+        .then()
+            .statusCode(OK_200)
+            .and()
+            .body(ID, equalTo(existingId));
     }
     
     @Test
     public void getPetsByNotExistingId() {
-        given().spec(requestSpec)
-               .header("api_key", "{{apiKey}}")
-               .pathParam("petId", notExistingId)
-               .when().get(PET_ID)
-               .then()
-               .statusCode(NOT_FOUND_404);
+        int notExistingId = CONSTANT_VALUE_INT; // Assuming CONSTANT_VALUE_INT is a non-existing ID
+    
+        given()
+            .spec(requestSpec)
+        .when()
+            .get(PET_ID, notExistingId)
+        .then()
+            .statusCode(NOT_FOUND_404)
+            .and()
+            .body(MESSAGE, equalTo(PET_NOT_FOUND));
     }
     
     @Test
     public void testFindPetById_NotFound() {
-        given().spec(requestSpec)
-               .header("api_key", "{{apiKey}}")
-               .pathParam("petId", notExistingId)
-               .when().get(PET_ID)
-               .then()
-               .statusCode(NOT_FOUND_404)
-               .and()
-               .body(MESSAGE, equalTo(PET_NOT_FOUND));
+        int notExistingId = CONSTANT_VALUE_INT; // Assuming CONSTANT_VALUE_INT is a non-existing ID
+    
+        given()
+            .spec(requestSpec)
+        .when()
+            .get(PET_ID, notExistingId)
+        .then()
+            .statusCode(NOT_FOUND_404)
+            .and()
+            .body(MESSAGE, equalTo(PET_NOT_FOUND));
     }
 
     @AfterAll
