@@ -155,47 +155,62 @@
    
 
 
+
+```java
 @Test
 public void getPetsByExistingId() {
-    int existingId = 1; // Assuming 1 is an existing ID
-
-    given()
-        .spec(requestSpec)
-        .pathParam(PET_ID, existingId)
-    .when()
-        .get(PET_ID)
-    .then()
-        .statusCode(OK_200)
-        .and()
-        .body(ID, equalTo(existingId));
+    given().spec(requestSpec)
+           .header("api_key", "{{apiKey}}")
+           .pathParam("petId", petDog.getId())
+           .when().get(PET_ID)
+           .then()
+           .statusCode(OK_200)
+           .and()
+           .body(ID, equalTo(petDog.getId()))
+           .body(NAME, equalTo(petDog.getName()))
+           .body(STATUS, equalTo("available"));
 }
 
 @Test
 public void getPetsByNotExistingId() {
-    int notExistingId = CONSTANT_VALUE_INT; // Assuming CONSTANT_VALUE_INT is a non-existing ID
-
-    given()
-        .spec(requestSpec)
-        .pathParam(PET_ID, notExistingId)
-    .when()
-        .get(PET_ID)
-    .then()
-        .statusCode(NOT_FOUND_404)
-        .and()
-        .body(MESSAGE, equalTo(PET_NOT_FOUND));
+    given().spec(requestSpec)
+           .header("api_key", "{{apiKey}}")
+           .pathParam("petId", notExistingId)
+           .when().get(PET_ID)
+           .then()
+           .statusCode(NOT_FOUND_404)
+           .and()
+           .body(equalTo(""));
 }
 
 @Test
 public void testFindPetById_NotFound() {
-    int notExistingId = CONSTANT_VALUE_INT; // Assuming CONSTANT_VALUE_INT is a non-existing ID
-
-    given()
-        .spec(requestSpec)
-        .pathParam(PET_ID, notExistingId)
-    .when()
-        .get(PET_ID)
-    .then()
-        .statusCode(NOT_FOUND_404)
-        .and()
-        .body(MESSAGE, equalTo(PET_NOT_FOUND));
+    given().spec(requestSpec)
+           .header("api_key", "{{apiKey}}")
+           .pathParam("petId", notExistingId)
+           .when().get(PET_ID)
+           .then()
+           .statusCode(NOT_FOUND_404)
+           .and()
+           .body(MESSAGE, equalTo(PET_NOT_FOUND));
 }
+```
+
+### Explanation:
+
+1. **getPetsByExistingId:**
+   - This test case attempts to retrieve a pet using an existing ID.
+   - The test uses the RestAssured library to make a GET request to the specified endpoint with the pet ID as a path parameter.
+   - The response is validated to ensure the status code is 200 (OK) and the body contains the correct pet ID, name, and status.
+
+2. **getPetsByNotExistingId:**
+   - This test case attempts to retrieve a pet using an ID that does not exist in the database.
+   - It checks that the server responds with a 404 (Not Found) status code and that the response body is empty.
+
+3. **testFindPetById_NotFound:**
+   - Similar to the previous test, but this one also checks the response body for a specific message indicating the pet was not found.
+   - The validation checks for a 404 status code and a message "Pet not found".
+
+### Additional Notes:
+- The `{{apiKey}}` placeholder in the header should be replaced with the actual API key when running the tests.
+- The `PET_ID` is used as a placeholder in the URL path where the pet ID should be inserted. This is replaced by the actual ID during the test execution using `.pathParam("petId", value)`.
