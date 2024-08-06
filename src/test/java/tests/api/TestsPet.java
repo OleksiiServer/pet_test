@@ -14,9 +14,11 @@ import org.junit.jupiter.api.parallel.ExecutionMode;
 
 import epam.api.dto.Pet;
 import epam.api.utils.RestUtilities;
+import static epam.data.StatusCode.NOT_FOUND_404;
 import static epam.data.StatusCode.OK_200;
 import static epam.data.StringConstants.CONSTANT_VALUE_INT;
 import static epam.data.StringConstants.PET_ID;
+import static epam.data.StringConstants.PET_NOT_FOUND;
 import epam.data.TestData;
 import static io.restassured.RestAssured.given;
 import io.restassured.response.Response;
@@ -78,34 +80,34 @@ public class TestsPet {
     }
 
     @Test
-    public void getPetsByExistingId() {
-        given().spec(requestSpec)
-                .get(PET_ID, existingPetId)
-                .then()
-                .statusCode(200)
-                .and()
-                .body("id", equalTo(existingPetId));
-    }
+public void getPetsByExistingId() {
+    given().spec(requestSpec)
+           .get(PET_ID, petDog.getId())
+           .then()
+           .statusCode(OK_200)
+           .and()
+           .body("id", equalTo(petDog.getId()));
+}
 
-    @Test
-    public void getPetsByNotExistingId() {
-        given().spec(requestSpec)
-                .get(PET_ID, notExistingId)
-                .then()
-                .statusCode(404)
-                .and()
-                .body("message", equalTo("Pet not found"));
-    }
+@Test
+public void getPetsByNotExistingId() {
+    given().spec(requestSpec)
+           .get(PET_ID, notExistingId)
+           .then()
+           .statusCode(NOT_FOUND_404)
+           .and()
+           .body("message", equalTo(PET_NOT_FOUND));
+}
 
-    @Test
-    public void testFindPetById_NotFound() {
-        given().spec(requestSpec)
-                .get(PET_ID, notExistingId)
-                .then()
-                .statusCode(404)
-                .and()
-                .body("message", equalTo("Pet not found"));
-    }
+@Test
+public void testFindPetById_NotFound() {
+    given().spec(requestSpec)
+           .get(PET_ID, notExistingId)
+           .then()
+           .statusCode(NOT_FOUND_404)
+           .and()
+           .body("message", equalTo(PET_NOT_FOUND));
+}
 
     @AfterAll
     public static void clean() {

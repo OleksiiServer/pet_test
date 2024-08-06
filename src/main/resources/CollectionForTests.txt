@@ -156,71 +156,33 @@
 
 
 ```java
-import io.restassured.builder.RequestSpecBuilder;
-import io.restassured.http.ContentType;
-import io.restassured.specification.RequestSpecification;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+@Test
+public void getPetsByExistingId() {
+    given().spec(requestSpec)
+           .get(PET_ID, petDog.getId())
+           .then()
+           .statusCode(OK_200)
+           .and()
+           .body("id", equalTo(petDog.getId()));
+}
 
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.CoreMatchers.equalTo;
+@Test
+public void getPetsByNotExistingId() {
+    given().spec(requestSpec)
+           .get(PET_ID, notExistingId)
+           .then()
+           .statusCode(NOT_FOUND_404)
+           .and()
+           .body("message", equalTo(PET_NOT_FOUND));
+}
 
-public class TestsPet {
-    private static RequestSpecification requestSpec;
-
-    private static final String BASE_URL = "https://petstore.swagger.io";
-    private static final String BASE_PATH = "/v2/pet/";
-    private static final String PET_ID = "{petId}";
-
-    private final int existingPetId = 1;
-    private final int notExistingId = 50000;
-
-    @BeforeAll
-    public static void initSpec() {
-        requestSpec = new RequestSpecBuilder()
-                .setBaseUri(BASE_URL)
-                .setBasePath(BASE_PATH)
-                .setContentType(ContentType.JSON)
-                .build();
-    }
-
-    @Test
-    public void getPetsByExistingId() {
-        given().spec(requestSpec)
-                .get(PET_ID, existingPetId)
-                .then()
-                .statusCode(200)
-                .and()
-                .body("id", equalTo(existingPetId));
-    }
-
-    @Test
-    public void getPetsByNotExistingId() {
-        given().spec(requestSpec)
-                .get(PET_ID, notExistingId)
-                .then()
-                .statusCode(404)
-                .and()
-                .body("message", equalTo("Pet not found"));
-    }
-
-    @Test
-    public void testFindPetById_NotFound() {
-        given().spec(requestSpec)
-                .get(PET_ID, notExistingId)
-                .then()
-                .statusCode(404)
-                .and()
-                .body("message", equalTo("Pet not found"));
-    }
+@Test
+public void testFindPetById_NotFound() {
+    given().spec(requestSpec)
+           .get(PET_ID, notExistingId)
+           .then()
+           .statusCode(NOT_FOUND_404)
+           .and()
+           .body("message", equalTo(PET_NOT_FOUND));
 }
 ```
-
-Explanation:
-1. **Request Specification**: Defined at the class level, specifying the base URI, path, and content type common to all requests.
-2. **Tests**:
-   - `getPetsByExistingId`: Tests retrieving a pet with an existing ID. Expects a 200 status code and the correct pet ID in the response body.
-   - `getPetsByNotExistingId`: Tests the scenario where a pet ID does not exist. Expects a 404 status code and an error message indicating the pet was not found.
-   - `testFindPetById_NotFound`: Similar to the `getPetsByNotExistingId` test, it checks the handling of a non-existent pet ID. Also expects a 404 status code and the "Pet not found" message.
-   
-Each test method uses the `given().spec(requestSpec)` pattern to use the pre-configured request specification, and queries are using `.get(PET_ID, petId)` to comply with the requirement to avoid using `.pathParam()`.
